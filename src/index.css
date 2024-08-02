@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .inputStyle {
+    @apply border w-[100%] rounded p-2 text-gray-500 shadow;
+  }
+  .inputError {
+    @apply border-red-500 focus:outline-red-500;
+  }
+  .formButton {
+    @apply border w-[100px] p-2 rounded-md  bg-blue-500 hover:bg-blue-700 duration-150 text-white font-semibold disabled:bg-gray-300;
+  }
+}

@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import FormInput from "./FormInput";
 
 export default function RegisterForm() {
   const {
@@ -27,28 +28,40 @@ export default function RegisterForm() {
 
   const handelRegister = (dataValues) => {
     console.log(dataValues);
+    // Calling API
   };
   const handelRegisterErrors = (errorsValues) => {
     console.log(errorsValues);
   };
+
   return (
     <>
       <div className="border p-5 w-[500px] rounded">
         <h1 className="my-5 text-[20px] font-bold"> Register </h1>
         <form onSubmit={handleSubmit(handelRegister, handelRegisterErrors)}>
-          <div className="flex justify-center items-start flex-col mb-3">
-            <label htmlFor="textInput">UserText</label>
+          <FormInput error={errors?.textInput && errors?.textInput?.message}>
             <input
-              className="border w-[100%] rounded p-2 text-gray-500 focus:outline-gray-400 shadow"
+              className={`inputStyle ${errors?.textInput ? "inputError" : ""}`}
+              {...register("textInput", {
+                required: "This Field Is Required",
+                minLength: {
+                  value: 5,
+                  message: "Length Of This Field Must Be Mخre Than 5 Char",
+                },
+                maxLength: {
+                  value: 15,
+                  message: "Length Of This Field Must Be Less Than 15 Char",
+                },
+                // validate: {
+                //   onNameValue: (fieldValue) => {
+                //     return fieldValue !== "muhammad" || "Try Another Name";
+                //   },
+                // },
+              })}
               type="text"
-              //   name="textInput"
-              id="textInput"
-              {...register("textInput", { required: "This Field Is Required" })}
+              id=""
             />
-            {errors?.textInput?.message && (
-              <span className="text-red-500">{errors?.textInput?.message}</span>
-            )}
-          </div>
+          </FormInput>
           <div className="flex justify-center items-start flex-col mb-3">
             <label htmlFor="numberInput">UserNumber</label>
             <input
@@ -143,7 +156,7 @@ export default function RegisterForm() {
 
           <button
             type="submit"
-            className="border w-[100px] p-2 rounded-md  bg-blue-500 hover:bg-blue-700 duration-150 text-white font-semibold"
+            className="formButton "
             disabled={!isDirty || !isValid}
           >
             Submit
